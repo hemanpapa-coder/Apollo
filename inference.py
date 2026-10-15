@@ -230,7 +230,10 @@ def run_inference(
     overlap_seconds=1.0,
     chunk_batch_size=1,
     chunk_pad_seconds=0.0,
+    texture_reduction_db=0.0,
 ):
+    if not np.isfinite(texture_reduction_db) or not 0 <= texture_reduction_db <= 3:
+        raise ValueError("Texture reduction must be finite and between 0 and 3 dB.")
     input_path = Path(input_wav)
     output_path = Path(output_wav)
     if input_path.resolve() == output_path.resolve():
@@ -263,6 +266,13 @@ def run_inference(
             chunk_batch_size=chunk_batch_size,
             chunk_pad_samples=chunk_pad_samples,
         )
+    if texture_reduction_db:
+        from texture_softening import soften_texture
+
+        softened, _ = soften_texture(
+            output.squeeze(0).numpy(), sample_rate, texture_reduction_db
+        )
+        output = torch.from_numpy(softened).unsqueeze(0)
     save_audio(output_path, output, sample_rate)
     return device
 
@@ -310,6 +320,10 @@ def main():
         default=1,
         help="Chunks per model forward pass (default: 1; higher uses more memory)",
     )
+    parser.add_argument(
+        "--texture-reduction-db", type=float, default=0.0,
+        help="Experimental texture softening cap, 0-3 dB (default: 0, disabled)",
+    )
     args = parser.parse_args()
 
     device = run_inference(
@@ -321,6 +335,7 @@ def main():
         args.overlap_seconds,
         args.chunk_batch_size,
         args.chunk_pad_seconds,
+        args.texture_reduction_db,
     )
     print(f"Inference completed on {device}: {args.out_wav}")
 
