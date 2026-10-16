@@ -35,7 +35,11 @@ def main():
     p.add_argument('--checkpoint', type=Path, required=True)
     p.add_argument('--output-dir', type=Path, required=True)
     p.add_argument('--device', choices=['mps','cpu','cuda'], default='mps')
+    p.add_argument('--only-case', help='Rebuild one case, preserving completed cases in the existing manifest')
+    p.add_argument('--pure-python-yaml', action='store_true', help='Use the supported pure-Python PyYAML parser instead of its optional C extension')
     a = p.parse_args()
+    if a.pure_python_yaml:
+        sys.modules['yaml._yaml'] = None
     a.output_dir.mkdir(parents=True, exist_ok=True)
     upstream = a.output_dir/'upstream_inference.py'
     upstream.write_bytes(subprocess.check_output(['git','show',BASE+':inference.py']))
@@ -58,19 +62,26 @@ def main():
              ('control-celesta','celesta',10,True,'no added codec degradation negative control; review attacks')]
     report = dict(upstream_commit=BASE,upstream_inference_sha256=digest(upstream),
                   checkpoint_sha256=digest(a.checkpoint),checkpoint_revision='c68bd80fdd9c0d93d2f4a833cb154624f660a561',
-                  device=str(device),torch=torch.__version__,numpy=np.__version__,scipy=scipy.__version__,
+                  pure_python_yaml=a.pure_python_yaml,device=str(device),torch=torch.__version__,numpy=np.__version__,scipy=scipy.__version__,
                   soundfile=sf.__version__,libsndfile=sf.__libsndfile_version__,platform=platform.platform(),
                   chunk_seconds=6,overlap_seconds=1,chunk_pad_seconds=1,chunk_batch_size=1,
                   sources=sources,cases=[],notes='Sources are already lossy public recordings; source-proxy is NOT a lossless clean reference. No listener verdict. Controls are no-added-degradation, not certified clean recordings.')
+    if a.only_case:
+        previous=json.loads((a.output_dir/'measurements.json').read_text())
+        report['cases']=[r for r in previous['cases'] if r['id']!=a.only_case]
     meter = pyln.Meter(SR)
     rng = random.Random(441044)
     for cid,sid,start,control,focus in cases:
+        if a.only_case and cid!=a.only_case:
+            skipped=list(range(6));rng.shuffle(skipped)
+            continue
         out = a.output_dir/cid;out.mkdir(exist_ok=True)
         raw = out/'raw';raw.mkdir(exist_ok=True)
         audition = out/'blind';audition.mkdir(exist_ok=True)
         source, rate = sf.read(a.sources_dir/lookup[sid]['file'],dtype='float32',always_2d=True)
         assert rate==SR and source.shape[1]==2
-        context = source[(start-2)*SR:(start+17)*SR]
+        input_gain_db=-18.0 if cid=='quiet' else 0.0
+        context = source[(start-2)*SR:(start+17)*SR]*10**(input_gain_db/20)
         assert context.shape==(19*SR,2)
         sf.write(out/'context-source.wav',context,SR,subtype='FLOAT')
         if control: degraded = context.copy()
@@ -111,7 +122,7 @@ def main():
             letter=chr(65+i);v=matched[name]*common
             sf.write(audition/(letter+'.wav'),v.T,SR,subtype='FLOAT')
             key[letter]=name
-        row=dict(id=cid,source=sid,start_seconds=start,duration=15,no_added_degradation=control,
+        row=dict(id=cid,source=sid,input_gain_db=input_gain_db,start_seconds=start,duration=15,no_added_degradation=control,
                  focus=focus,model_seconds=elapsed,postprocessing=stats,metrics=metrics,
                  blind_key=key,blind_target_lufs=-23+20*np.log10(common),common_gain_db=20*np.log10(common))
         report['cases'].append(row)

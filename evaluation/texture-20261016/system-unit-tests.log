@@ -1,0 +1,41 @@
+/Volumes/Program Dev/Neuracoust Suno Sound Build-up/contributions/apollo-texture/test-dependencies/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+test_auto_falls_back_to_cpu (test_inference.DeviceSelectionTests) ... ok
+test_auto_prefers_cuda_over_mps (test_inference.DeviceSelectionTests) ... ok
+test_auto_uses_mps_when_cuda_is_unavailable (test_inference.DeviceSelectionTests) ... ok
+test_explicit_unavailable_cuda_fails (test_inference.DeviceSelectionTests) ... ok
+test_explicit_unavailable_mps_fails (test_inference.DeviceSelectionTests) ... ok
+test_arbitrary_hugging_face_repository_is_rejected (test_inference.InferenceTests) ... ok
+test_checkpoint_directory_is_rejected (test_inference.InferenceTests) ... ok
+test_chunk_padding_discards_degraded_input_edges (test_inference.InferenceTests) ... ok
+test_chunk_padding_wider_than_the_hop_reproduces_the_input (test_inference.InferenceTests)
+Regression test ... ok
+test_chunk_settings_reject_invalid_durations (test_inference.InferenceTests) ... ok
+test_chunked_cpu_inference_preserves_samples_and_limits_chunk_size (test_inference.InferenceTests) ... ok
+test_chunking_rejects_invalid_batch_size (test_inference.InferenceTests) ... ok
+test_chunking_rejects_short_model_output (test_inference.InferenceTests) ... ok
+test_cpu_inference_preserves_input_and_audio_shape (test_inference.InferenceTests) ... ok
+test_existing_local_checkpoint_is_accepted (test_inference.InferenceTests) ... ok
+test_invalid_batch_size_fails_before_checkpoint_download (test_inference.InferenceTests) ... ok
+test_missing_local_checkpoint_has_clear_error (test_inference.InferenceTests) ... ok
+test_official_checkpoint_downloads_from_trusted_repository (test_inference.InferenceTests) ... ok
+test_refuses_hard_link_output_alias (test_inference.InferenceTests) ... ok
+test_refuses_to_overwrite_input (test_inference.InferenceTests) ... ok
+test_short_input_uses_original_full_file_path (test_inference.InferenceTests) ... ok
+test_unpadded_chunks_leak_degraded_edges (test_inference.InferenceTests) ... ok
+test_wrong_sample_rate_fails_before_download_or_device_transfer (test_inference.InferenceTests) ... ok
+test_invalid_cap_rejected_before_model_load (test_texture_inference.IntegrationTests) ... ok
+test_missing_scipy_fails_before_audio_checkpoint_or_model (test_texture_inference.IntegrationTests) ... ok
+test_optional_postprocessing_and_default_bypass (test_texture_inference.IntegrationTests) ... ok
+test_short_clip_rejected_before_checkpoint_but_disabled_still_works (test_texture_inference.IntegrationTests) ... ok
+test_unrelated_import_errors_are_not_misreported (test_texture_inference.IntegrationTests) ... ok
+test_actual_modulation_is_bounded (test_texture_softening.TextureTests) ... ok
+test_exact_bypass (test_texture_softening.TextureTests) ... ok
+test_invalid (test_texture_softening.TextureTests) ... ok
+test_silence (test_texture_softening.TextureTests) ... ok
+test_steady_tone_stereo_and_length (test_texture_softening.TextureTests) ... ok
+
+----------------------------------------------------------------------
+Ran 33 tests in 16.020s
+
+OK

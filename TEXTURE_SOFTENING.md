@@ -52,3 +52,10 @@ Local synthetic benchmark (macOS 26.5.1 arm64, Python 3.9.6, NumPy 2.0.2,
 SciPy 1.13.1): 4 s stereo took 0.0301 / 0.0250 / 0.0250 s for the
 post-process alone; max STFT gain reduction 1.9105 dB. Timing is hardware and
 fixture dependent. Equal-RMS audition copies matched RMS within 0.000001 dB.
+
+## PR44 follow-up
+
+Early dependency/short-input checks, pinned CPU CI, real-music comparison
+methodology and song-length memory evidence are documented in
+[evaluation/texture-20261016/REPORT.md](evaluation/texture-20261016/REPORT.md).
+The feature remains opt-in and the PR remains Draft pending listening.

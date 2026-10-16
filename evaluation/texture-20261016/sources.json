@@ -1,0 +1,46 @@
+[
+  {
+    "id": "voice",
+    "file": "where-now.mp3",
+    "title": "Where You Are Now",
+    "attribution": "Benjamin Orth featuring Wolf Fly (source vocal: Ascension / Rhiannon)",
+    "license": "CC-BY-3.0",
+    "license_url": "https://creativecommons.org/licenses/by/3.0/",
+    "source_page": "https://ccmixter.org/files/Benjamin_Orth/33036",
+    "download": "https://ccmixter.org/content/Benjamin_Orth/Benjamin_Orth_-_Where_You_Are_Now.mp3",
+    "sha256": "56e989e49e0ff91b74cfd92da19b64a4b82aa477a7b39822803aa538c617d046"
+  },
+  {
+    "id": "vibe",
+    "file": "Kevin_MacLeod_-_Vibe_Ace.hq.ogg",
+    "title": "Vibe Ace",
+    "attribution": "Kevin MacLeod",
+    "license": "CC-BY-4.0",
+    "license_url": "https://creativecommons.org/licenses/by/4.0/",
+    "source_page": "https://librosa.org/data/audio/Kevin_MacLeod_-_Vibe_Ace.toml",
+    "download": "https://librosa.org/data/audio/Kevin_MacLeod_-_Vibe_Ace.hq.ogg",
+    "sha256": "73d6443ef90a7c022f164e5aa90e56c2291585930b39b1656d0765abbc1f1779"
+  },
+  {
+    "id": "piano",
+    "file": "Study2.ogg",
+    "title": "Studies for Piano",
+    "attribution": "Richard Kearns",
+    "license": "CC-BY-3.0",
+    "license_url": "https://creativecommons.org/licenses/by/3.0/",
+    "source_page": "https://commons.wikimedia.org/wiki/File:Study2.ogg",
+    "download": "https://upload.wikimedia.org/wikipedia/commons/d/de/Study2.ogg",
+    "sha256": "4a70c3a9c699cd174b81b048a70ec69b7d5c171a0e469c05fe1d70484ba5389a"
+  },
+  {
+    "id": "celesta",
+    "file": "Kevin_MacLeod_-_P_I_Tchaikovsky_Dance_of_the_Sugar_Plum_Fairy.hq.ogg",
+    "title": "Dance of the Sugar Plum Fairy",
+    "attribution": "P.I. Tchaikovsky (composer), Kevin MacLeod (arranger)",
+    "license": "CC-BY-4.0",
+    "license_url": "https://creativecommons.org/licenses/by/4.0/",
+    "source_page": "https://librosa.org/data/audio/Kevin_MacLeod_-_P_I_Tchaikovsky_Dance_of_the_Sugar_Plum_Fairy.toml",
+    "download": "https://librosa.org/data/audio/Kevin_MacLeod_-_P_I_Tchaikovsky_Dance_of_the_Sugar_Plum_Fairy.hq.ogg",
+    "sha256": "f062221a56a227cdb7c067cf2e6ac0e250a50012f7693ca0c8e31f05f83e49b1"
+  }
+]
