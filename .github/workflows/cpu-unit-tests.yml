@@ -2,8 +2,9 @@ name: CPU unit tests
 
 on:
   pull_request:
+  workflow_dispatch:
   push:
-    branches: [main]
+    branches: [main, experimental/optional-texture-softening]
 
 jobs:
   unit-tests:

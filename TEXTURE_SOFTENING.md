@@ -8,7 +8,11 @@ applies. This does not modify model weights or claim a new restoration model.
 
 The default is 0: the existing inference path and output remain unchanged.
 The optional CPU NumPy/SciPy post-process runs once after full-file or chunked
-inference. It needs at least 2048 output frames. It adds no model forward passes,
+inference. Optional SciPy is imported before audio/model loading; missing SciPy
+raises an actionable error before checkpoint download. Inputs shorter than
+2048 frames are rejected before checkpoint download/model loading only when
+the option is enabled. The disabled path retains short-clip behavior. It needs
+at least 2048 output frames. It adds no model forward passes,
 but holds a full-output STFT in memory, so chunked model inference no longer
 implies bounded post-processing memory. SciPy is required only when enabled.
 

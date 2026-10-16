@@ -37,3 +37,40 @@ class IntegrationTests(unittest.TestCase):
         for cap in (-1, 4, np.nan, np.inf):
             with self.assertRaises(ValueError):
                 inference.run_inference('unused.wav', 'out.wav', 'unused.pt', texture_reduction_db=cap)
+
+    def test_missing_scipy_fails_before_audio_checkpoint_or_model(self):
+        missing = ModuleNotFoundError("No module named scipy", name="scipy")
+        with mock.patch.object(inference.importlib, 'import_module', side_effect=missing), \
+             mock.patch.object(inference, 'load_audio') as audio, \
+             mock.patch.object(inference, 'resolve_checkpoint') as checkpoint, \
+             mock.patch.object(inference.look2hear.models.BaseModel, 'from_pretrain') as model:
+            with self.assertRaisesRegex(RuntimeError, 'requires SciPy'):
+                inference.run_inference('in.wav', 'out.wav', 'model.pt', 'cpu', texture_reduction_db=2)
+            audio.assert_not_called()
+            checkpoint.assert_not_called()
+            model.assert_not_called()
+
+    def test_short_clip_rejected_before_checkpoint_but_disabled_still_works(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            source, dest = root/'short.wav', root/'out.wav'
+            x = np.zeros((1024, 1), dtype='float32')
+            sf.write(source, x, 44100, subtype='FLOAT')
+            with mock.patch.object(inference, 'resolve_checkpoint') as checkpoint, \
+                 mock.patch.object(inference.look2hear.models.BaseModel, 'from_pretrain', return_value=torch.nn.Identity()) as model:
+                with self.assertRaisesRegex(ValueError, 'at least 2048'):
+                    inference.run_inference(source, dest, 'model.pt', 'cpu', texture_reduction_db=2)
+                checkpoint.assert_not_called()
+                model.assert_not_called()
+                self.assertFalse(dest.exists())
+                with mock.patch.object(inference, 'load_texture_processor') as optional:
+                    inference.run_inference(source, dest, 'model.pt', 'cpu')
+                    optional.assert_not_called()
+                y, _ = sf.read(dest, dtype='float32', always_2d=True)
+                np.testing.assert_array_equal(y, x)
+
+    def test_unrelated_import_errors_are_not_misreported(self):
+        missing = ModuleNotFoundError('missing other', name='other')
+        with mock.patch.object(inference.importlib, 'import_module', side_effect=missing):
+            with self.assertRaises(ModuleNotFoundError):
+                inference.load_texture_processor()
