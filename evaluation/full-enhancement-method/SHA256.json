@@ -1,0 +1,14 @@
+{
+  "LICENSE": "eb8364a4474d5b6e207f3800c75b04070dde1f4ea9c210c38cd836f7a3f24203",
+  "README.md": "ede8be303771add17016ced7a5d5cf4c132c1cd467fe4684bfaa9dd92fe1093b",
+  "reproduce.py": "b5fe7a3d249851bbfacd154714d38611db6592d424f560845596755ce376ac34",
+  "tests.log": "d604981d971e6b563efd3d4c03a57a8dc15813336d519cc6d9d85061ac9fd60b",
+  "source/apollo_enhanced.py": "7a46b1bc8be70954641b87f3f974b891d9e99853ac9be362de086de807f73c1f",
+  "source/apollo_gain_fusion.py": "5d971695be03b7f31ef9eed6f62a941abe073a9a55587a80904c7720777dee32",
+  "source/apollo_phase_stability.py": "97f4687413542b0a1054629d9eeb73f666b0009ef089a4a6847982891764d22f",
+  "source/apollo_texture_softening.py": "dcbcda936416e2a04d6d00df5febbbfabe30382ee31fcba620a6aaf41ca8be4c",
+  "tests/test_apollo_enhanced.py": "5ed2876f08f14efe3fc0e8a8b21b87f265da122a8084443ed20814f14562a877",
+  "tests/test_apollo_gain_fusion.py": "a0c38aec851172b0647c6b78fc6699543b25015ee78e6a5329a6e2d3615b6d44",
+  "tests/test_apollo_phase_stability.py": "7bb819d0255e7bc37ca4cb95cb7e995719a50037f483c97c41a51dd255cfcc5a",
+  "tests/test_apollo_texture_softening.py": "d418e887e3d2c3a4f299acf8cc89ed1f5076149afdaf9896d16d8f5b002d4833"
+}
